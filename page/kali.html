@@ -11,26 +11,73 @@
     <hr>
     <div>
         <h1>System</h1>
-        <h2 onclick="copyToClipboard('#ram')" id="Ram_Click" title="cat /proc/meminfo
+        <h2 onclick="copyToClipboard('#ram')"title="cat /proc/meminfo
         Click vào để coppy">RAM<i id="ram">cat /proc/meminfo</i></h2>
-        <h2 onclick="copyToClipboard('#CPU')" id="CPU_Click" title="cat /proc/cpuinfo
+
+        <h2 onclick="copyToClipboard('#CPU')" title= "cat /proc/cpuinfo
         Click vào để coppy">CPU <i id="CPU">cat /proc/cpuinfo</i></h2>
-        <h2 onclick="copyToClipboard('#Model')" id="Model_Click" title="lscpu
+
+        <h2 onclick="copyToClipboard('#Model')" title="lscpu
         Click vào để coppy">Model<i id="Model">lscpu</i></h2>
-        <style>
-            h2{
-                display: inline-block;
-                color: #444;
-            }
-        </style>
+
+        <h2 onclick="copyToClipboard('#Uname')" title="uname -a
+        Xem phần cứng
+        Click vào để coppy">Uname<i id="Uname">lscpu</i></h2>
+
+        <h2 onclick="copyToClipboard('#Serial')" title="dmidecode -s system-serial-number
+        Click vào để coppy">Serial<i id="Serial">dmidecode -s system-serial-number</i></h2>
+
+        <h2 onclick="copyToClipboard('#Model')" title="Top
+        Xem tiến trình (Như Task Manager)
+        Click vào để coppy">Top<i id="Model">top</i></h2>    
+
+        <h2 onclick="copyToClipboard('#ip')" title="ip add
+        Click vào để coppy">ip<i id="ip">ip add</i></h2>
+
+            
     </div>
     <hr>
     <div>
         <h1>File</h1>
+        <h2 onclick="copyToClipboard('#Df')" title="Df -h
+        Xem dung lượng thư mục
+        Click vào để coppy">Df<i id="Df">df -h</i></h2>
+
+        <h2 onclick="copyToClipboard('#ls')" title="ls
+        liệt kê, xem vị trí hiện tại có gì
+        Click vào để coppy">Ls<i id="ls">ls</i></h2>
+
+        <h2 onclick="copyToClipboard('#CD')" title="cd
+        Di chuyển
+        Click vào để coppy">Cd<i id="CD">cd</i></h2>    
+
+        <h2 onclick="copyToClipboard('#pwd')" title="pwd
+        Hiện thị vị trí đang đứng ( trong cmd ) gõ sudo su -> ko cần dùng pwd
+        Click vào để coppy">pwd<i id="pwd">pwd</i></h2>
+
+        <h2 onclick="copyToClipboard('#cp')" title="cp
+        cp [OPTION] Source Destination
+        cp [OPTION] Source-1 Source-2 Source-3 Source-n Directory
+
+        [OPTION]
+        cp -a: lưu trữ 
+        cp -f: nếu trùng xoá luôn
+        cp -n: trùng thì thôi ko coppy
+        cp -i: hỏi trùng chùng
+        cp -R: kể cả các tệp bị ẩn
+        còn nhiều nhưng trên là đủ xài mấy cái kia nâng cao và ít xài tới
+        ">coppy<i id="cp">cp</i></h2>
     </div>
     <hr>
     <div>
         <h1>User</h1>
+        <h2 onclick="copyToClipboard('#hostname')" title="hostname
+        Xem tên server
+        Click vào để coppy">hostname<i id="hostname">hostname</i></h2>
+
+        <h2 onclick="copyToClipboard('#passwd')" title="passwd
+        Đổi mật khẩu của user hiện tại đang dùng
+        Click vào để coppy">passwd<i id="passwd">passwd </i></h2>
     </div>
     <hr>
 <style>
@@ -47,7 +94,9 @@
         font-size: 200%;
     }
     h2{
-        font-size:larger;
+        display: inline;
+        background-color: #31708f;
+        font-size: 20px;
     }
     i{
         font-size: 0%;
