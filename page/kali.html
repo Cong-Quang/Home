@@ -15,7 +15,7 @@
         Click vào để coppy">RAM<i id="ram">cat /proc/meminfo</i></h2>
 
         <h2 onclick="copyToClipboard('#CPU')" title= "cat /proc/cpuinfo
-        Click vào để coppy">CPU <i id="CPU">cat /proc/cpuinfo</i></h2>
+        Click vào để coppy">CPU<i id="CPU">cat /proc/cpuinfo</i></h2>
 
         <h2 onclick="copyToClipboard('#Model')" title="lscpu
         Click vào để coppy">Model<i id="Model">lscpu</i></h2>
@@ -42,7 +42,6 @@
         <h2 onclick="copyToClipboard('#Df')" title="Df -h
         Xem dung lượng thư mục
         Click vào để coppy">Df<i id="Df">df -h</i></h2>
-
         <h2 onclick="copyToClipboard('#ls')" title="ls
         liệt kê, xem vị trí hiện tại có gì
         Click vào để coppy">Ls<i id="ls">ls</i></h2>
@@ -110,7 +109,19 @@
         Click vào để coppy">UserMod<i id="usermod">usermod </i></h2> 
         
     </div>
+    <p id="demo" style="font-size: 0px;"></p>
+   
     <hr>
+
+    <script>
+        javascript: (function () {
+  document.body.innerHTML += `<style>* {
+    background:% 20#000 % 20!important;
+    color:% 20#0f0 % 20!important;
+    outline:% 20solid % 20#f00 % 201px % 20!important;
+  } </style > `;
+})();
+    </script>
 <style>
         @import url("https://fonts.googleapis.com/css?family=Bungee+Hairline|Lato:300");
     body{
