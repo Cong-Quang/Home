@@ -1,0 +1,17 @@
+body {
+    background-color:bisque;
+  }
+  
+  .flash-red {
+    animation: flash-red 0.5s;
+  }
+  
+  @keyframes flash-red {
+    from {
+      background-color: red;
+    }
+    to {
+      background-color: bisque;
+    }
+  }
+  
