@@ -11,7 +11,7 @@ const questions = [
   {
     question: "Vì mày tao phải đánh tao, vì tao tao phải đánh luôn cả mày. Hỏi đang làm gì?",
     answers: [
-      { text: "Đánh nhau", correct: false },
+      { text: "Tình yêu", correct: false },
       { text: "Chơi game", correct: false },
       { text: "Tập thể dục", correct: false },
       { text: "Đập muỗi", correct: true }
@@ -20,10 +20,10 @@ const questions = [
   {
     question: "Cái gì có thể cung cấp một nền tảng vật lý để gắn kết các linh kiện điện tử?",
     answers: [
+      { text: "Bảng mạch", correct: true },
       { text: "CPU", correct: false },
       { text: "RAM", correct: false },
-      { text: "Ổ cứng", correct: false },
-      { text: "Bảng mạch", correct: true }
+      { text: "Ổ cứng", correct: false }
     ]
   },
   {
@@ -31,8 +31,8 @@ const questions = [
     answers: [
       { text: "Châu Á", correct: false },
       { text: "Châu Âu", correct: false },
-      { text: "Châu Phi", correct: false },
-      { text: "Nam Mỹ", correct: true }
+      { text: "Nam Mỹ", correct: true },
+      { text: "Châu Phi", correct: false }
     ]
   },
   {
@@ -40,17 +40,17 @@ const questions = [
     answers: [
       { text: "Ben Affleck", correct: false },
       { text: "Michael Keaton", correct: false },
-      { text: "George Clooney", correct: false },
-      { text: "Christian Bale", correct: true }
+      { text: "Christian Bale", correct: true },
+      { text: "George Clooney", correct: false }
     ]
   },
   {
-    question: "Giá vàng hiện nay cán mốc bao nhiêu.",
+    question: "Giá vàng hiện tại cán mốc bao nhiêu ?",
     answers: [
-      { text: "5000 USD", correct: false },
-      { text: "3000 USD", correct: false },
-      { text: "1000 USD", correct: false },
-      { text: "Tùy thời điểm", correct: true }
+      { text: "89,1 triệu đồng/lượng", correct: false },
+      { text: "88,1 triệu đồng/lượng", correct: false },
+      { text: "90,2 triệu đồng/lượng", correct: true },
+      { text: "Tùy thời điểm", correct: false }
     ]
   }
 ];
