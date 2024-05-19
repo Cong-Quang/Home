@@ -15,3 +15,16 @@ body {
     }
   }
   
+  .flash-green {
+    animation: flash-green 0.5s;
+  }
+  
+  @keyframes flash-green {
+    from {
+      background-color: green;
+    }
+    to {
+      background-color: bisque;
+    }
+  }
+  

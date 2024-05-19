@@ -9,12 +9,12 @@ const questions = [
     ]
   },
   {
-    question: "Vì mày tao phải đánh tao, vì tao tao phải đánh luôn cả mày. Hỏi đang làm gì?",
+    question: "Trong một thành phố nổi tiếng ở châu Âu, có một tòa nhà cao chọc trời có tên là 'Eiffel Tower'\n Đây là địa danh ở đâu?",
     answers: [
-      { text: "Tình yêu", correct: false },
-      { text: "Chơi game", correct: false },
-      { text: "Tập thể dục", correct: false },
-      { text: "Đập muỗi", correct: true }
+      { text: "London", correct: false },
+      { text: "Madrid", correct: false },
+      { text: "Berlin", correct: false },
+      { text: "Paris", correct: true }
     ]
   },
   {
@@ -83,7 +83,13 @@ function selectAnswer(answer, button) {
       btn.classList.add(answer.correct ? 'bg-green-500' : 'bg-red-500');
     }
   });
-
+  // if(answer.correct){
+  //   body.classList.add('flash-green');
+  //   setTimeout(() => {
+  //     body.classList.remove('flash-green');
+  //     buttons.forEach(btn => btn.disabled = green); // Re-enable buttons for another attempt
+  //   }, 500);
+  // }
   if (!answer.correct) {
     body.classList.add('flash-red');
     setTimeout(() => {
