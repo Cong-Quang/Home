@@ -7,29 +7,51 @@
   <link rel="icon" type="image/x-icon" href="data/ico/transactions.svg">
   <style>
     * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; }
     body {
-      margin: 0;
-      min-height: 100vh;
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0ea5e9 100%);
-      color: #1e293b;
+      color: #fff;
+      perspective: 1200px;
+    }
+    #fireworks {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: radial-gradient(ellipse at bottom, #0a0f2c 0%, #020617 100%);
+    }
+    .scene {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
+      transform-style: preserve-3d;
     }
     .card {
       width: 100%;
       max-width: 520px;
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 40px 32px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 24px;
+      padding: 44px 32px;
       text-align: center;
-      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+      transform: translateZ(40px) rotateX(2deg);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateZ(40px) rotateX(2deg) translateY(0); }
+      50% { transform: translateZ(60px) rotateX(2deg) translateY(-10px); }
     }
     .icon {
-      width: 88px;
-      height: 88px;
+      width: 96px;
+      height: 96px;
       margin: 0 auto 20px;
       border-radius: 50%;
       background: linear-gradient(135deg, #22c55e, #0ea5e9);
@@ -37,54 +59,45 @@
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 44px;
-      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.45);
+      transform: translateZ(30px);
     }
-    h1 { margin: 0 0 12px; font-size: 24px; color: #0f172a; }
-    p { margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: #334155; }
+    .icon svg { width: 48px; height: 48px; }
+    h1 { margin: 0 0 12px; font-size: 26px; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+    p { margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); }
     .status {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #15803d;
+      background: rgba(34, 197, 94, 0.18);
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      color: #bbf7d0;
       border-radius: 12px;
       padding: 12px 16px;
       font-size: 14px;
       font-weight: 600;
       margin: 20px 0;
+      transform: translateZ(20px);
     }
-    .btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      color: #fff;
-      text-decoration: none;
-      padding: 14px 32px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 15px;
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
-    }
-    .note { font-size: 13px; color: #64748b; margin-top: 20px; }
-    .footer { margin-top: 24px; font-size: 12px; color: #64748b; }
-    .footer a { color: #2563eb; text-decoration: none; }
+    .note { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 16px; }
+    .footer { margin-top: 24px; font-size: 12px; color: rgba(255,255,255,0.6); }
+    .footer a { color: #7dd3fc; text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="icon">
-      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
-    </div>
-    <h1>Xác thực thành công</h1>
-    <p>Email của bạn đã được xác thực thành công. Bạn có thể quay lại ứng dụng <strong>smarthome TCP</strong> để tiếp tục sử dụng.</p>
-    <div class="status" id="status">Đang xử lý xác thực...</div>
-    <p>
-      <a class="btn" href="https://cong-quang.github.io/Home/">Về trang chủ</a>
-    </p>
-    <p class="note">Nếu bạn không thực hiện yêu cầu này, vui lòng liên hệ hỗ trợ ngay.</p>
-    <div class="footer">
-      © 2026 smarthome TCP · Nguyễn Công Quang<br />
-      <a href="https://www.facebook.com/poopooi01">Facebook</a> · <a href="mailto:wtvvvnjk@gmail.com">Email</a>
+  <canvas id="fireworks"></canvas>
+  <div class="scene">
+    <div class="card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h1>Xác thực thành công</h1>
+      <p>Email của bạn đã được xác thực thành công. Bạn có thể quay lại ứng dụng <strong>smarthome TCP</strong> để tiếp tục sử dụng.</p>
+      <div class="status" id="status">Đang xử lý xác thực...</div>
+      <p class="note">Nếu bạn không thực hiện yêu cầu này, vui lòng liên hệ hỗ trợ ngay.</p>
+      <div class="footer">
+        © 2026 smarthome TCP · Nguyễn Công Quang<br />
+        <a href="https://www.facebook.com/poopooi01">Facebook</a> · <a href="mailto:wtvvvnjk@gmail.com">Email</a>
+      </div>
     </div>
   </div>
 
@@ -98,15 +111,115 @@
       var token = params.get('access_token') || params.get('token');
       if (token || type === 'signup' || type === 'email_change' || type === 'recovery') {
         status.textContent = 'Xác thực email thành công. Bạn có thể đóng trang này và quay lại ứng dụng.';
-        status.style.background = '#f0fdf4';
-        status.style.borderColor = '#bbf7d0';
-        status.style.color = '#15803d';
+        status.style.background = 'rgba(34, 197, 94, 0.18)';
+        status.style.borderColor = 'rgba(34, 197, 94, 0.5)';
+        status.style.color = '#bbf7d0';
       } else {
         status.textContent = 'Trang xác thực thành công của smarthome TCP.';
-        status.style.background = '#eff6ff';
-        status.style.borderColor = '#bfdbfe';
-        status.style.color = '#1d4ed8';
+        status.style.background = 'rgba(59, 130, 246, 0.18)';
+        status.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+        status.style.color = '#bfdbfe';
       }
+    })();
+
+    // Fireworks background
+    (function () {
+      var canvas = document.getElementById('fireworks');
+      var ctx = canvas.getContext('2d');
+      var particles = [];
+      var rockets = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function random(min, max) { return Math.random() * (max - min) + min; }
+
+      function launch() {
+        rockets.push({
+          x: random(canvas.width * 0.2, canvas.width * 0.8),
+          y: canvas.height,
+          vx: random(-1.5, 1.5),
+          vy: random(-14, -10),
+          targetY: random(canvas.height * 0.2, canvas.height * 0.5),
+          color: 'hsl(' + Math.floor(random(0, 360)) + ', 100%, 60%)',
+          exploded: false
+        });
+      }
+
+      function explode(x, y, color) {
+        var count = Math.floor(random(60, 100));
+        for (var i = 0; i < count; i++) {
+          var angle = (Math.PI * 2 * i) / count + random(-0.1, 0.1);
+          var speed = random(1, 6);
+          particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            decay: random(0.012, 0.022),
+            color: color,
+            gravity: 0.06,
+            size: random(1.5, 3)
+          });
+        }
+      }
+
+      function update() {
+        ctx.fillStyle = 'rgba(2, 6, 23, 0.18)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // rockets
+        for (var i = rockets.length - 1; i >= 0; i--) {
+          var r = rockets[i];
+          r.x += r.vx;
+          r.y += r.vy;
+          r.vy += 0.15;
+          // trail
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = r.color;
+          ctx.fill();
+          if (r.y <= r.targetY || r.vy >= 0) {
+            explode(r.x, r.y, r.color);
+            rockets.splice(i, 1);
+          }
+        }
+
+        // particles
+        for (var j = particles.length - 1; j >= 0; j--) {
+          var p = particles[j];
+          p.vx *= 0.98;
+          p.vy += p.gravity;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= p.decay;
+          if (p.alpha <= 0) {
+            particles.splice(j, 1);
+            continue;
+          }
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        if (Math.random() < 0.04) launch();
+      }
+
+      function loop() {
+        update();
+        requestAnimationFrame(loop);
+      }
+      // initial bursts
+      for (var k = 0; k < 3; k++) setTimeout(launch, k * 400);
+      loop();
     })();
   </script>
 </body>
