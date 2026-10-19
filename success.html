@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xác thực thành công - smarthome TCP</title>
+  <link rel="icon" type="image/x-icon" href="data/ico/transactions.svg">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0ea5e9 100%);
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+    }
+    .icon {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 44px;
+      font-weight: 700;
+    }
+    h1 { margin: 0 0 12px; font-size: 24px; color: #0f172a; }
+    p { margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: #334155; }
+    .status {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 20px 0;
+    }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+    }
+    .note { font-size: 13px; color: #64748b; margin-top: 20px; }
+    .footer { margin-top: 24px; font-size: 12px; color: #64748b; }
+    .footer a { color: #2563eb; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <h1>Xác thực thành công</h1>
+    <p>Email của bạn đã được xác thực thành công. Bạn có thể quay lại ứng dụng <strong>smarthome TCP</strong> để tiếp tục sử dụng.</p>
+    <div class="status" id="status">Đang xử lý xác thực...</div>
+    <p>
+      <a class="btn" href="https://cong-quang.github.io/Home/">Về trang chủ</a>
+    </p>
+    <p class="note">Nếu bạn không thực hiện yêu cầu này, vui lòng liên hệ hỗ trợ ngay.</p>
+    <div class="footer">
+      © 2026 smarthome TCP · Nguyễn Công Quang<br />
+      <a href="https://www.facebook.com/poopooi01">Facebook</a> · <a href="mailto:wtvvvnjk@gmail.com">Email</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var status = document.getElementById('status');
+      var hash = window.location.hash ? window.location.hash.substring(1) : '';
+      var search = window.location.search ? window.location.search.substring(1) : '';
+      var params = new URLSearchParams(hash || search);
+      var type = params.get('type');
+      var token = params.get('access_token') || params.get('token');
+      if (token || type === 'signup' || type === 'email_change' || type === 'recovery') {
+        status.textContent = 'Xác thực email thành công. Bạn có thể đóng trang này và quay lại ứng dụng.';
+        status.style.background = '#f0fdf4';
+        status.style.borderColor = '#bbf7d0';
+        status.style.color = '#15803d';
+      } else {
+        status.textContent = 'Trang xác thực thành công của smarthome TCP.';
+        status.style.background = '#eff6ff';
+        status.style.borderColor = '#bfdbfe';
+        status.style.color = '#1d4ed8';
+      }
+    })();
+  </script>
+</body>
+</html>
