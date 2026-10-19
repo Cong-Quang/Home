@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Xác thực thành công - smarthome TCP</title>
   <link rel="icon" type="image/x-icon" href="data/ico/transactions.svg">
   <style>
-    * { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; overflow: hidden; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
     body {
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       color: #fff;
       perspective: 1200px;
     }
+
     #fireworks {
       position: fixed;
       inset: 0;
@@ -21,6 +32,7 @@
       z-index: 0;
       background: radial-gradient(ellipse at bottom, #0a0f2c 0%, #020617 100%);
     }
+
     .scene {
       position: relative;
       z-index: 1;
@@ -31,6 +43,7 @@
       padding: 24px;
       transform-style: preserve-3d;
     }
+
     .card {
       width: 100%;
       max-width: 520px;
@@ -41,14 +54,23 @@
       border-radius: 24px;
       padding: 44px 32px;
       text-align: center;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
       transform: translateZ(40px) rotateX(2deg);
       animation: float 6s ease-in-out infinite;
     }
+
     @keyframes float {
-      0%, 100% { transform: translateZ(40px) rotateX(2deg) translateY(0); }
-      50% { transform: translateZ(60px) rotateX(2deg) translateY(-10px); }
+
+      0%,
+      100% {
+        transform: translateZ(40px) rotateX(2deg) translateY(0);
+      }
+
+      50% {
+        transform: translateZ(60px) rotateX(2deg) translateY(-10px);
+      }
     }
+
     .icon {
       width: 96px;
       height: 96px;
@@ -64,26 +86,46 @@
       animation: tickJump 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s 1 forwards;
       transform-style: preserve-3d;
     }
-    .icon svg { width: 48px; height: 48px; }
+
+    .icon svg {
+      width: 48px;
+      height: 48px;
+    }
+
     @keyframes tickJump {
       0% {
         transform: translateZ(30px) translateY(0) rotateY(0deg) scale(1);
         background: linear-gradient(135deg, #facc15, #f59e0b);
         box-shadow: 0 12px 30px rgba(250, 204, 21, 0.45);
       }
+
       40% {
         transform: translateZ(50px) translateY(-60px) rotateY(180deg) scale(1.1);
         background: linear-gradient(135deg, #f97316, #ef4444);
         box-shadow: 0 26px 44px rgba(239, 68, 68, 0.45);
       }
+
       100% {
         transform: translateZ(30px) translateY(0) rotateY(360deg) scale(1);
         background: linear-gradient(135deg, #22c55e, #0ea5e9);
         box-shadow: 0 12px 30px rgba(34, 197, 94, 0.45);
       }
     }
-    h1 { margin: 0 0 12px; font-size: 26px; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
-    p { margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    p {
+      margin: 0 0 16px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
     .status {
       background: rgba(34, 197, 94, 0.18);
       border: 1px solid rgba(34, 197, 94, 0.5);
@@ -95,6 +137,7 @@
       margin: 20px 0;
       transform: translateZ(20px);
     }
+
     .btn-return {
       display: inline-flex;
       align-items: center;
@@ -116,35 +159,60 @@
       transform: translateZ(25px);
       margin: 10px auto 16px;
     }
+
     .btn-return:hover {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       transform: translateZ(35px) translateY(-2px);
       box-shadow: 0 16px 36px rgba(30, 107, 255, 0.6);
     }
+
     .btn-return:active {
       transform: translateZ(20px) translateY(1px);
     }
-    .btn-return svg { width: 20px; height: 20px; flex-shrink: 0; }
-    .note { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 16px; }
-    .footer { margin-top: 24px; font-size: 12px; color: rgba(255,255,255,0.6); }
-    .footer a { color: #7dd3fc; text-decoration: none; }
+
+    .btn-return svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .note {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 16px;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
   </style>
 </head>
+
 <body>
   <canvas id="fireworks"></canvas>
   <div class="scene">
     <div class="card">
       <div class="icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
       <h1>Xác thực thành công</h1>
-      <p>Email của bạn đã được xác thực thành công. Bạn có thể quay lại ứng dụng <strong>smarthome TCP</strong> để tiếp tục sử dụng.</p>
+      <p>Email của bạn đã được xác thực thành công. Bạn có thể quay lại ứng dụng <strong>smarthome TCP</strong> để tiếp
+        tục sử dụng.</p>
       <div class="status" id="status">Đang xử lý xác thực...</div>
       <div>
         <button id="btnReturnApp" class="btn-return" onclick="returnToApp()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
             <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
             <polyline points="10 17 15 12 10 7"></polyline>
             <line x1="15" y1="12" x2="3" y2="12"></line>
@@ -155,7 +223,8 @@
       <p class="note">Nếu bạn không thực hiện yêu cầu này, vui lòng liên hệ hỗ trợ ngay.</p>
       <div class="footer">
         © 2026 smarthome TCP · Nguyễn Công Quang<br />
-        <a href="https://www.facebook.com/poopooi01">Facebook</a> · <a href="mailto:wtvvvnjk@gmail.com">Email</a>
+        <a href="https://www.facebook.com/poopooi01">Facebook</a> · <a href="mailto:wtvvvnjk@gmail.com">Email</a>· <a
+          href="https://github.com/Cong-Quang">Github</a>
       </div>
     </div>
   </div>
@@ -171,7 +240,7 @@
     function notifyDesktopApp(token) {
       var query = token ? ('?token=' + encodeURIComponent(token)) : '';
       // 1. Fetch với CORS & Private Network Access
-      fetch('http://localhost:3000/switch-to-login' + query, { method: 'GET', mode: 'cors' }).catch(function () {});
+      fetch('http://localhost:3000/switch-to-login' + query, { method: 'GET', mode: 'cors' }).catch(function () { });
       // 2. Ping ẩn bằng thẻ ảnh để đảm bảo không bị chặn bởi bảo mật Private Network/CORS
       var img = new Image();
       img.src = 'http://localhost:3000/?action=login' + (token ? ('&token=' + encodeURIComponent(token)) : '') + '&_t=' + Date.now();
@@ -336,4 +405,5 @@
     })();
   </script>
 </body>
+
 </html>
