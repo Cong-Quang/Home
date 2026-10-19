@@ -95,6 +95,36 @@
       margin: 20px 0;
       transform: translateZ(20px);
     }
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 360px;
+      background: linear-gradient(135deg, #1e6bff 0%, #2563eb 100%);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 14px;
+      padding: 14px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(30, 107, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(25px);
+      margin: 10px auto 16px;
+    }
+    .btn-return:hover {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      transform: translateZ(35px) translateY(-2px);
+      box-shadow: 0 16px 36px rgba(30, 107, 255, 0.6);
+    }
+    .btn-return:active {
+      transform: translateZ(20px) translateY(1px);
+    }
+    .btn-return svg { width: 20px; height: 20px; flex-shrink: 0; }
     .note { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 16px; }
     .footer { margin-top: 24px; font-size: 12px; color: rgba(255,255,255,0.6); }
     .footer a { color: #7dd3fc; text-decoration: none; }
@@ -112,6 +142,16 @@
       <h1>Xác thực thành công</h1>
       <p>Email của bạn đã được xác thực thành công. Bạn có thể quay lại ứng dụng <strong>smarthome TCP</strong> để tiếp tục sử dụng.</p>
       <div class="status" id="status">Đang xử lý xác thực...</div>
+      <div>
+        <button id="btnReturnApp" class="btn-return" onclick="returnToApp()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+          <span>Quay lại Đăng nhập Ứng dụng</span>
+        </button>
+      </div>
       <p class="note">Nếu bạn không thực hiện yêu cầu này, vui lòng liên hệ hỗ trợ ngay.</p>
       <div class="footer">
         © 2026 smarthome TCP · Nguyễn Công Quang<br />
@@ -121,6 +161,57 @@
   </div>
 
   <script>
+    function getAuthToken() {
+      var hash = window.location.hash ? window.location.hash.substring(1) : '';
+      var search = window.location.search ? window.location.search.substring(1) : '';
+      var params = new URLSearchParams(hash || search);
+      return params.get('access_token') || params.get('token') || '';
+    }
+
+    function notifyDesktopApp(token) {
+      var query = token ? ('?token=' + encodeURIComponent(token)) : '';
+      // 1. Fetch với CORS & Private Network Access
+      fetch('http://localhost:3000/switch-to-login' + query, { method: 'GET', mode: 'cors' }).catch(function () {});
+      // 2. Ping ẩn bằng thẻ ảnh để đảm bảo không bị chặn bởi bảo mật Private Network/CORS
+      var img = new Image();
+      img.src = 'http://localhost:3000/?action=login' + (token ? ('&token=' + encodeURIComponent(token)) : '') + '&_t=' + Date.now();
+    }
+
+    function returnToApp() {
+      var btn = document.getElementById('btnReturnApp');
+      var status = document.getElementById('status');
+      var token = getAuthToken();
+
+      if (btn) {
+        btn.innerHTML = '<span>⏳ Đang chuyển về ứng dụng...</span>';
+        btn.style.opacity = '0.85';
+      }
+
+      notifyDesktopApp(token);
+
+      setTimeout(function () {
+        if (btn) {
+          btn.innerHTML = '<span>✅ Đã chuyển về App SmartHome!</span>';
+          btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+          btn.style.opacity = '1';
+        }
+        if (status) {
+          status.textContent = '🎉 Ứng dụng SmartHome TCP trên máy tính đã được kích hoạt và chuyển sang tab Đăng nhập!';
+          status.style.background = 'rgba(34, 197, 94, 0.25)';
+          status.style.borderColor = 'rgba(34, 197, 94, 0.6)';
+          status.style.color = '#bbf7d0';
+        }
+      }, 500);
+
+      // Thử focus hoặc mở protocol / window nếu được phép
+      setTimeout(function () {
+        if (btn) {
+          btn.innerHTML = '<span>Quay lại Đăng nhập Ứng dụng</span>';
+          btn.style.background = 'linear-gradient(135deg, #1e6bff 0%, #2563eb 100%)';
+        }
+      }, 4000);
+    }
+
     (function () {
       var status = document.getElementById('status');
       var hash = window.location.hash ? window.location.hash.substring(1) : '';
@@ -129,10 +220,13 @@
       var type = params.get('type');
       var token = params.get('access_token') || params.get('token');
       if (token || type === 'signup' || type === 'email_change' || type === 'recovery') {
-        status.textContent = 'Xác thực email thành công. Bạn có thể đóng trang này và quay lại ứng dụng.';
+        status.textContent = 'Xác thực email thành công. Bạn có thể nhấn nút bên dưới để quay lại ứng dụng.';
         status.style.background = 'rgba(34, 197, 94, 0.18)';
         status.style.borderColor = 'rgba(34, 197, 94, 0.5)';
         status.style.color = '#bbf7d0';
+
+        // Tự động thông báo ngay tới Desktop App nếu mở trên cùng máy tính
+        notifyDesktopApp(token);
       } else {
         status.textContent = 'Trang xác thực thành công của smarthome TCP.';
         status.style.background = 'rgba(59, 130, 246, 0.18)';
